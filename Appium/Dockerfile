@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-LABEL maintainer "Srinivasan Sekar <srinivasan.sekar1990@gmail.com>"
+LABEL maintainer "Eddy Choi <kwo2002@gmail.com>"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -88,7 +88,7 @@ RUN curl -sL https://deb.nodesource.com/setup_7.x | bash - && \
 #==================================
 # Fix Issue with timezone mismatch
 #==================================
-ENV TZ="US/Pacific"
+ENV TZ="Asia/Seoul"
 RUN echo "${TZ}" > /etc/timezone
 
 #===============
@@ -107,4 +107,4 @@ COPY Appium/tests /root/tests
 #===================
 # Run xvfb and appium server
 #===================
-CMD xvfb-run appium
+CMD xvfb-run appium --session-override
