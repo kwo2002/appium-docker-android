@@ -99,11 +99,6 @@ RUN echo "${TZ}" > /etc/timezone
 #===============
 EXPOSE 4723
 
-#====================
-# Add Unit test file
-#====================
-COPY Appium/tests /root/tests
-
 #===================
 # Run xvfb and appium server
 #===================
