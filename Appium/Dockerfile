@@ -48,13 +48,13 @@ RUN apt-get -qqy update && \
   && rm -rf /var/lib/apt/lists/*
 
 #===============
-# Set JAVA_HOME
+# JAVA_HOME 환경변수 설정
 #===============
 ENV JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/jre" \
     PATH=$PATH:$JAVA_HOME/bin
 
 #=====================
-# Install Android SDK
+# Android SDK 설치
 #=====================
 ENV SDK_VERSION=25.2.3 \
     ANDROID_BUILD_TOOLS_VERSION=25.0.3 \
@@ -72,7 +72,7 @@ RUN echo y | android update sdk -a -u -t platform-tools,build-tools-${ANDROID_BU
 ENV PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools
 
 #====================================
-# Install latest nodejs, npm, appium
+# nodejs, npm, appium 설치
 #====================================
 ENV APPIUM_VERSION=1.6.5
 
@@ -86,7 +86,7 @@ RUN curl -sL https://deb.nodesource.com/setup_7.x | bash - && \
     apt-get clean
 
 #==================================
-# Fix Issue with timezone mismatch
+# TimeZone 변경
 #==================================
 ENV TZ="Asia/Seoul"
 RUN echo "${TZ}" > /etc/timezone
@@ -100,6 +100,74 @@ RUN echo "${TZ}" > /etc/timezone
 EXPOSE 4723
 
 #===================
-# Run xvfb and appium server
+# chromedriver 설치
+#===================
+RUN mkdir -p /root/chromedriver/linux/4.x /root/chromedriver/linux/5.x /root/chromedriver/linux/6.x
+RUN mkdir -p /root/chromedriver/mac/4.x /root/chromedriver/mac/5.x /root/chromedriver/mac/6.x
+RUN mkdir -p /root/chromedriver/win/4.x /root/chromedriver/win/5.x /root/chromedriver/win/6.x
+
+
+#===================
+# android os 4.x
+# chromedriver 2.9
+# win, linux mac
+#===================
+RUN curl -sS -o /root/chromedriver/linux/4.x/chromedriver.zip http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip && \
+    unzip /root/chromedriver/linux/4.x/chromedriver.zip && \
+    rm /root/chromedriver/linux/4.x/chromedriver.zip && \
+    chmod +x /root/chromedriver/linux/4.x/chromedriver
+
+RUN curl -sS -o /root/chromedriver/mac/4.x/chromedriver.zip http://chromedriver.storage.googleapis.com/2.9/chromedriver_mac32.zip && \
+    unzip /root/chromedriver/mac/4.x/chromedriver.zip && \
+    rm /root/chromedriver/mac/4.x/chromedriver.zip && \
+    chmod +x /root/chromedriver/mac/4.x/chromedriver
+
+RUN curl -sS -o /root/chromedriver/win/4.x/chromedriver.zip http://chromedriver.storage.googleapis.com/2.9/chromedriver_win32.zip && \
+    unzip /root/chromedriver/win/4.x/chromedriver.zip && \
+    rm /root/chromedriver/win/4.x/chromedriver.zip && \
+    chmod +x /root/chromedriver/win/4.x/chromedriver
+
+#===================
+# android os 5.x
+# chromedriver 2.29
+# win, linux mac
+#===================
+RUN curl -sS -o /root/chromedriver/linux/5.x/chromedriver.zip http://chromedriver.storage.googleapis.com/2.29/chromedriver_linux64.zip && \
+    unzip /root/chromedriver/linux/5.x/chromedriver.zip && \
+    rm /root/chromedriver/linux/5.x/chromedriver.zip && \
+    chmod +x /root/chromedriver/linux/5.x/chromedriver
+
+RUN curl -sS -o /root/chromedriver/mac/5.x/chromedriver.zip http://chromedriver.storage.googleapis.com/2.29/chromedriver_mac64.zip && \
+    unzip /root/chromedriver/mac/5.x/chromedriver.zip && \
+    rm /root/chromedriver/mac/5.x/chromedriver.zip && \
+    chmod +x /root/chromedriver/mac/5.x/chromedriver
+
+RUN curl -sS -o /root/chromedriver/win/5.x/chromedriver.zip http://chromedriver.storage.googleapis.com/2.29/chromedriver_win32.zip && \
+    unzip /root/chromedriver/win/5.x/chromedriver.zip && \
+    rm /root/chromedriver/win/5.x/chromedriver.zip && \
+    chmod +x /root/chromedriver/win/5.x/chromedriver
+
+#===================
+# android os 6.x
+# chromedriver 2.29
+# win, linux mac
+#===================
+RUN curl -sS -o /root/chromedriver/linux/6.x/chromedriver.zip http://chromedriver.storage.googleapis.com/2.29/chromedriver_linux64.zip && \
+    unzip /root/chromedriver/linux/6.x/chromedriver.zip && \
+    rm /root/chromedriver/linux/6.x/chromedriver.zip && \
+    chmod +x /root/chromedriver/linux/6.x/chromedriver
+
+RUN curl -sS -o /root/chromedriver/mac/6.x/chromedriver.zip http://chromedriver.storage.googleapis.com/2.29/chromedriver_mac64.zip && \
+    unzip /root/chromedriver/mac/6.x/chromedriver.zip && \
+    rm /root/chromedriver/mac/6.x/chromedriver.zip && \
+    chmod +x /root/chromedriver/mac/6.x/chromedriver
+
+RUN curl -sS -o /root/chromedriver/win/6.x/chromedriver.zip http://chromedriver.storage.googleapis.com/2.29/chromedriver_win32.zip && \
+    unzip /root/chromedriver/win/6.x/chromedriver.zip && \
+    rm /root/chromedriver/win/6.x/chromedriver.zip && \
+    chmod +x /root/chromedriver/win/6.x/chromedriver
+
+#===================
+# appium server 실행
 #===================
 CMD xvfb-run appium --session-override
