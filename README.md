@@ -48,25 +48,3 @@
 
 7. Plug in devices after container is running; otherwise it will shows nothing.
 
-8. Run following command to verify adb devices can detect the connected android device.
-
-	```
-	$ docker exec -it container-appium bash "adb devices"
-	```
-
-9. Run UI Test with following test configuration
-
-	```
-	Push the apk file into the container
-	$ docker cp /Users/loacl-macosx-path-to-apk/app-debug.apk container-appium:/opt
-
-	Desired Capabilities:
-
-	private void androidSetup() throws MalformedURLException {
-	        caps.setCapability("deviceName", "Android");
-	        caps.setCapability("app", "/opt/app-debug.apk");
-	        //Get the IP Address of boot2docker
-	        //docker inspect $(docker ps -q) | grep IPA
-	        driver = new AndroidDriver<MobileElement>(new URL("http://192.168.99.100:32769/wd/hub"), caps);
-	}
-	```
