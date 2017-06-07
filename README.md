@@ -43,7 +43,7 @@
 6. Run the docker image
 
 	```
-	$ docker run --name container-appium -d -P --privileged -v /dev/bus/usb:/dev/bus/usb appium/appium
+	$ docker run --name container-appium -d -P --privileged -v /dev/bus/usb:/dev/bus/usb appium/kwo2002
 	```
 
 7. Plug in devices after container is running; otherwise it will shows nothing.
